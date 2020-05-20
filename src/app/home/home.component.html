@@ -1,0 +1,40 @@
+<h3>{{ pageTitle }}</h3>
+
+<a routerLink="/admin">{{ backofficeLinkLabel }}</a>
+
+<form [formGroup]="formPost" (ngSubmit)="addPost()">
+
+    <input type="hidden" name="postID" formControlName="postID">
+
+    <label for="postBody">{{ formLabels.postBody }}</label>
+    <input type="text" name="postBody" formControlName="postBody" #newPost (keyup)="validadeAutocomplete(newPost.value)">
+    <div class="suggestions">
+        <div *ngFor="let user of usersSuggestions">
+            {{ user.name }}
+            <input type="hidden" [value]="user.name">
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="!formPost.valid">{{ formLabels.submit }}</button>
+</form>
+
+<div>{{ statusMessage }}</div>
+
+<div *ngIf="posts !== undefined; else loadingPosts">
+    <div *ngIf="posts; else noPosts">
+        <ul>
+            <li *ngFor="let post of posts">
+                <div>{{ post.postBody }}</div>
+                <div (click)="editPost(post)">{{ postLabels.edit }}</div>
+                <div (click)="removePost(post.postID)">{{ postLabels.remove }}</div>
+            </li>
+        </ul>
+    </div>
+    <ng-template #noPosts>
+        {{ postLabels.noUsers }}
+    </ng-template>
+</div>
+<ng-template #loadingPosts>
+    {{ postLabels.loading }}
+    <!-- In a async request you can display a loading animation here -->
+</ng-template>

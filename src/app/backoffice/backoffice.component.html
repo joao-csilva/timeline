@@ -1,0 +1,43 @@
+<h3>{{ pageTitle }}</h3>
+
+<a routerLink="/">{{ homeLinkLabel }}</a>
+
+<form [formGroup]="formUser" (ngSubmit)="addUser()">
+
+    <input type="hidden" name="userID" formControlName="userID">
+
+    <label for="username">{{ formLabels.username }}</label>
+    <input type="text" name="username" formControlName="username">
+
+    <label for="name">{{ formLabels.name }}</label>
+    <input type="text" name="name" formControlName="name">
+
+    <label for="phone">{{ formLabels.phone }}</label>
+    <input type="text" name="phone" formControlName="phone">
+
+    <label for="role">{{ formLabels.role }}</label>
+    <input type="text" name="role" formControlName="role">
+
+    <button type="submit" [disabled]="!formUser.valid">{{ formLabels.submit }}</button>
+</form>
+
+<div>{{ statusMessage }}</div>
+
+<div *ngIf="users !== undefined; else loadingUsers">
+    <div *ngIf="users; else noUsers">
+        <ul>
+            <li *ngFor="let user of users">
+                <div>{{ user.name }}</div>
+                <div (click)="editUser(user)">{{ userCardLabels.edit }}</div>
+                <div (click)="removeUser(user)">{{ userCardLabels.remove }}</div>
+            </li>
+        </ul>
+    </div>
+    <ng-template #noUsers>
+        {{ userCardLabels.noUsers }}
+    </ng-template>
+</div>
+<ng-template #loadingUsers>
+    {{ userCardLabels.loading }}
+    <!-- In a async request you can display a loading animation here -->
+</ng-template>
