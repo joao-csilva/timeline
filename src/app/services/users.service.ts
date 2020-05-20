@@ -108,7 +108,7 @@ export class UsersService {
         suggestionSearch:
 
         for(let j = 0; j < nameToSearch.length; j++) {
-          if (users[i].name.charAt(j) !== nameToSearch.charAt(j)) {
+          if (users[i].username.charAt(j) !== nameToSearch.charAt(j)) {
             isMatch = false;
             break suggestionSearch;
           }

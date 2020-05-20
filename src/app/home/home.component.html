@@ -11,7 +11,7 @@
     <div class="suggestions">
         <div *ngFor="let user of usersSuggestions">
             {{ user.name }}
-            <input type="hidden" [value]="user.name">
+            <input type="hidden" [value]="user.username">
         </div>
     </div>
 
